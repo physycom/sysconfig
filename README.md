@@ -12,26 +12,21 @@ PS \>  cinst -y vcxsrv
 
 3) lanciare VcXsrv (è necessario che sia aperto ogni volta che si lanciano processi grafici dentro la bash!)
 4) Se non ancora abilitato, attivare UoW seguendo la [guida ufficiale](https://msdn.microsoft.com/it-it/commandline/wsl/install_guide)
-5) aprire la Bash ed abilitarne il funzionamento con VcXsrv con la seguente procedura (va fatta solo la prima volta)
+5) aprire la Bash ed abilitarne il funzionamento con VcXsrv con il seguente comando
 
 ```bash
-sudo apt-get install vim
-cd
-vim .bashrc
-# spostarsi alla fine del file, quindi premere il tasto I sulla tastiera
-# scrivere la seguente linea di codice
-export DISPLAY=localhost:0.0
-# uscire e salvare premendo in sequenza questi tasti (i 'due punti' non sono estetici, fanno parte della sequenza, mentre invece ESC ed ENTER sono i rispettivi tasti della tastiera!)
-# ESC : w q ENTER
+echo -e "\n export DISPLAY=localhost:0.0 \n" >> ~/.bashrc
 ```
 
 6) Seguire infine la guida per Ubuntu
 
 ## Ubuntu
 
-Aprire un terminale bash e digitare
+1) Definire una cartella di lavoro, che chiameremo WORKSPACE d'ora in poi: questa sarà una cartella "Codice" nella nostra home, oppure una cartella "code" sul desktop, tutto a vostro piacimento. Createla, se non ce l'avete già, nel modo preferito (mkdir da bash, oppure direttamente dall'interfaccia grafica col mouse). Standardizzeremo il funzionamento dei nostri script indipendentemente dalla posizione di questa cartella definendo a tal proposito una variabile d'ambiente. Attenzione a sapere esattamente il path assoluto di questa cartella, che assomiglierà ad una cosa del tipo `/home/$(whoami)/codice/` 
+2) Aprire quindi un terminale bash e digitare (sostituire `/path/completo/alla/nostra/cartella` con il path che abbiamo appena stabilito)
 
 ```bash
+echo -e "\n export WORKSPACE=/path/completo/alla/nostra/cartella \n" >> ~/.bashrc
 sudo apt-get update
 sudo apt-get dist-upgrade
 sudo apt-get install g++ cmake make git 
@@ -50,7 +45,7 @@ xcode-select --install
 ```
 
 2) Se non ancora installato, installare Homebrew secondo la guida presente sulla [homepage](https://brew.sh/index_it.html).
-3) Aprire infine un terminale e digitare
+3) Aprire un terminale e digitare
 
 ```bash
 brew update
@@ -60,10 +55,23 @@ git config --global core.autocrlf input
 brew install fltk boost freeglut
 ```
 
+4) Definire una cartella di lavoro, che chiameremo WORKSPACE d'ora in poi: questa sarà una cartella "Codice" nella nostra home, oppure una cartella "code" sul desktop, tutto a vostro piacimento. Createla, se non ce l'avete già, nel modo preferito (mkdir da terminale, oppure direttamente dall'interfaccia grafica del Finder col mouse). Standardizzeremo il funzionamento dei nostri script indipendentemente dalla posizione di questa cartella definendo a tal proposito una variabile d'ambiente. Attenzione a sapere esattamente il path assoluto di questa cartella, che assomiglierà ad una cosa del tipo `/Users/$(whoami)/codice/`
+5) Aprire quindi un terminale nuovo e digitare (sostituire `/path/completo/alla/nostra/cartella` con il path che abbiamo appena stabilito)
+
+```bash
+echo -e "\n export WORKSPACE=/path/completo/alla/nostra/cartella \n" >> ~/.bash_profile
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get install g++ cmake make git 
+git config --global core.autocrlf input
+sudo apt-get install libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
+```
+
+
 ## Windows (7+)
 
-1) Installare/aggiornare Visual Studio alla versione 2017. Se è necessario installarlo, scaricarlo da qui: [Visual Studio 2017 Community](http://visualstudio.com).
-2) Se non installato, installare [chocolatey](http://chocolatey.org)
+1) Installare/aggiornare Visual Studio alla versione 2017, assicurandosi di avere le ultime patch (lanciare l'installer per sicurezza per aggiornare automaticamente all'ultima versione). Se è necessario installarlo da zero, scaricarlo da qui: [Visual Studio 2017 Community](http://visualstudio.com).
+2) Se non installato, installare [chocolatey](http://chocolatey.org) seguendo le istruzioni sul sito
 3) Se non avete `git` e `cmake` già installati, oppure se non siete sicuri di avere una Powershell recente, aprire Powershell in modalità amministratore e quindi digitare
 
 ```PowerShell
