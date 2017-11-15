@@ -83,17 +83,24 @@ PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 %PROGRAMFILES%/CMake/bin
 ```
 
-7) Se vcpkg non è installato, eseguire la procedura seguente, altrimenti saltare direttamente al punto 9. Chiudere la Powershell e riaprirla, sempre in modalità utente standard
+7) Aprire una nuova Powershell, come utente standard, e clonare questo repository seguendo le istruzioni seguenti
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
 PS Codice>        git config --global core.autocrlf input
+PS Codice>        git clone https://github.com/physycom/sysconfig.git
+```
+
+8) Se vcpkg non è installato, eseguire la procedura seguente, altrimenti saltare direttamente al punto 10.
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
 PS Codice>        git clone https://github.com/Microsoft/vcpkg.git
 PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\bootstrap-vcpkg.bat
 ```
 
-8) Aprire Powershell in modalità amministratore e quindi digitare
+9) Aprire Powershell in modalità amministratore e quindi digitare
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -101,7 +108,7 @@ PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\vcpkg integrate install
 ```
 
-9) Aprire Powershell in modalità utente standard e quindi digitare
+10) Aprire Powershell in modalità utente standard e quindi digitare
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -109,7 +116,7 @@ PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
 ```
 
-10) Aprire un editor di testo qualsiasi (anche notepad.exe va bene!) e incollare il seguente testo:
+11) Aprire un editor di testo qualsiasi (anche notepad.exe va bene!) e incollare il seguente testo:
 
 ```PowerShell
 pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
@@ -127,9 +134,19 @@ e salvarlo nella cartella `Documenti\WindowsPowerShell` del proprio utente con n
 
 ### Upgrade software
 
-1) Per aggiornare i programmi installati con Chocolatey, aprire Powershell in modalità amministratore e quindi digitare
+1) Per aggiornare i programmi installati con Chocolatey, aprire una Powershell in modalità amministratore e quindi digitare
 
 ```PowerShell
 PS \>             cup all -y
 ```
 
+2) Per aggiornare le librerie installate con vcpkg, aprire una Powershell come utente standard e quindi digitare
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Codice>        cd vcpkg
+PS Codice>        git pull
+PS Codice>        .\vcpkg update
+```
+
+e quindi seguire le istruzioni a video
