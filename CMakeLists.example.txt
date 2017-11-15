@@ -1,0 +1,10 @@
+cmake_minimum_required (VERSION 3.1)
+project (sample)
+
+if(VCPKG_CHAINLOAD_TOOLCHAIN_FILE)
+    include("${VCPKG_CHAINLOAD_TOOLCHAIN_FILE}")
+endif()
+
+
+add_executable(test ${CMAKE_SOURCE_DIR}/src/source.cpp)
+
