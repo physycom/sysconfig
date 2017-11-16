@@ -107,7 +107,7 @@
           "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
-    }
+    },
     {
       "buildCommandArgs": "-m -v:minimal",
       "buildRoot": "${env.USERPROFILE}\\CMakeBuilds\\${workspaceHash}\\build\\${name}",
