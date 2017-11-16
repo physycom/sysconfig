@@ -1,5 +1,5 @@
 
-enable_language(CXX)
+#enable_language(CXX)  #do not enable to avoid recursive calls
 set(CMAKE_CXX_STANDARD 11)
 
 macro(configure_link_flags)
