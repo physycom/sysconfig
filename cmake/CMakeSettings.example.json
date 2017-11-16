@@ -18,7 +18,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -39,7 +39,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -60,7 +60,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -82,7 +82,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -104,7 +104,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -121,7 +121,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -138,7 +138,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -160,7 +160,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     },
@@ -182,7 +182,7 @@
         },
         {
           "name": "VCPKG_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "$env:WORKSPACE\\sysconfig\\cmake\\physycom_toolchain.cmake"
+          "value": "${env.WORKSPACE}\\sysconfig\\cmake\\physycom_toolchain.cmake"
         }
       ]
     }
