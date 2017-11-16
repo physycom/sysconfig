@@ -67,7 +67,6 @@ git config --global core.autocrlf input
 sudo apt-get install libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
 ```
 
-
 ## Windows (7+)
 
 1) Installare/aggiornare Visual Studio alla versione 2017, assicurandosi di avere le ultime patch (lanciare l'installer per sicurezza per aggiornare automaticamente all'ultima versione). Se è necessario installarlo da zero, scaricarlo da qui: [Visual Studio 2017 Community](http://visualstudio.com).
@@ -158,3 +157,28 @@ PS Codice>        .\vcpkg update
 ```
 
 e quindi seguire le istruzioni a video
+
+## Cygwin
+
+1) Se non è già installato nel sistema, installare [chocolatey](http://chocolatey.org)
+2) Aprire Powershell in modalità amministratore e quindi digitare
+
+```PowerShell
+PS \>             cinst -y cygwin
+```
+
+3) Definire una cartella di lavoro, che chiameremo WORKSPACE d'ora in poi: una cartella "Codice" nella nostra home, oppure una cartella "code" sul desktop, creandola nel modo preferito (mkdir da Powershell, oppure direttamente da explorer col mouse). Standardizzeremo il funzionamento dei nostri script indipendentemente dalla posizione di questa cartella definendo a tal proposito una variabile d'ambiente. Aprire pertanto una Powershell in modalità utente standard e digitare
+
+```PowerShell
+PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
+```
+
+4) Nella schermata che si apre, nella sezione superiore, creare una nuova variabile con nome WORKSPACE e come valore il path completo della nostra cartella di lavoro precedentemente stabilita. 
+
+5) Aprire una nuova Powershell in modalità utente standard e quindi digitare (rimuovere il suffisso `_x64` nella seconda riga se il proprio sistema operativo è a 32 bit)
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Code>          Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile $env:WORKSPACE\cygwin-setup.exe
+PS Code>          .\cygwin-setup --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,libboost-devel,cmake,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
+```
