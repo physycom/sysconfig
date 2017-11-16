@@ -1,4 +1,5 @@
 
+enable_language(CXX)
 set(CMAKE_CXX_STANDARD 11)
 
 macro(configure_link_flags)
