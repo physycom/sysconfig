@@ -1,7 +1,4 @@
 
-#enable_language(CXX)  #do not enable to avoid recursive calls
-set(CMAKE_CXX_STANDARD 11)
-
 macro(configure_link_flags)
   set(MSVC_C_CXX_FLAGS
     CMAKE_C_FLAGS_DEBUG
@@ -86,4 +83,3 @@ foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
 endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
