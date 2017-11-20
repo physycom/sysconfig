@@ -1,0 +1,174 @@
+# Prerequisites for the code building
+
+## Ubuntu On Windows
+
+It is better to use Bash on Ubuntu on Windows only from build 15063 (Creators Update).
+1) If not already installed, please install [chocolatey](http://chocolatey.org)
+2) If not already installed, please install an X server with this procedure: open Powershell with Administrator privileges and write
+
+```PowerShell
+PS \>  cinst -y vcxsrv
+```
+
+3) Run VcXsrv (it is necessary to keep it open whenever you need any graphical process inside Bash!)
+4) If it not already enabled, turn on UoW following the [official guide](https://msdn.microsoft.com/it-it/commandline/wsl/install_guide)
+5) Open Ubuntu and enable the graphics through VcXsrv with this command
+
+```bash
+echo -e "\n export DISPLAY=localhost:0.0 \n" >> ~/.bashrc
+```
+
+6) Close the Bash and follow now the Ubuntu guide
+
+## Ubuntu
+
+1) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "c++" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in bash, or from the graphical interface of your distribution). We will now define an environment variable to tell the system where our folder is. Please note down the full path of this folder, which will look like `/home/$(whoami)/code/` 
+2) Open a Bash terminal and type the following commands (replace `/full/path/to/my/folder` with the previous path noted down)
+
+```bash
+echo -e "\n export WORKSPACE=/full/path/to/my/folder \n" >> ~/.bashrc
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get install -y g++ cmake make git 
+git config --global core.autocrlf input
+sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
+```
+
+## macOS
+
+1) If not already installed, install the XCode Command Line Tools, typing this command in a terminal:
+
+```bash
+xcode-select --install
+```
+
+2) If not already installed, install Homebrew following the [official guide](https://brew.sh/index_it.html).
+3) Open the terminal and type these commands
+
+```bash
+brew update
+brew upgrade
+brew install cmake make git
+git config --global core.autocrlf input
+brew install fltk boost freeglut
+```
+
+4) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "c++" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in bash, or from the graphical interface in Finder). We will now define an environment variable to tell the system where our folder is. Please note down the full path of this folder, which will look like `/home/$(whoami)/code/` 
+2) Open a Terminal and type the following command (replace `/full/path/to/my/folder` with the previous path noted down)
+
+```bash
+echo -e "\n export WORKSPACE=/full/path/to/my/folder \n" >> ~/.bash_profile
+```
+
+## Windows (7+)
+
+1) Install or update Visual Studio to at least version 2017, making sure to have it fully patched (run again the installer if not sure to automatically update to latest version). If you need to install from scratch, download VS from here: [Visual Studio 2017 Community](http://visualstudio.com)
+2) If not already installed, please install chocolatey using the [official guide](http://chocolatey.org)
+3) If you are not sure about having them updated, or even installed, please install `git`, `cmake` and an updated `Powershell`. To do so, open your Powershell with Administrator privileges and type
+
+```PowerShell
+PS \>             cinst -y git cmake powershell
+```
+
+4) Restart the PC if required by chocolatey after the latest step
+5) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "cpp" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in Powershell, or from the graphical interface in explorer). We will now define an environment variable to tell the system where our folder is. Please note down its full path. Open a Powershell (as a standard user) and type
+
+```PowerShell
+PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
+```
+
+6) In the upper part of the window that pops-up, create a new variable with name WORKSPACE and value the full path noted down before. If it not already in the PATH (this is possible only if you did it before), we also need to modify the "Path" variable adding the following string (on Windows 10 you need to add a new line to insert it, on Windows Windows 7/8 it is necessary to append it using a `;` as a separator between other records):
+
+```cmd
+%PROGRAMFILES%/CMake/bin
+```
+
+7) Open a Powershell (as a standard user) and type
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Code>          git config --global core.autocrlf input
+PS Code>          git clone https://github.com/physycom/sysconfig.git
+```
+
+8) If `vcpkg` is not installed, please follow the next procedure, otherwise please jump to #10
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Code>          git clone https://github.com/Microsoft/vcpkg.git
+PS Code>          cd vcpkg
+PS Code\vcpkg>    .\bootstrap-vcpkg.bat
+```
+
+9) Open a Powershell with Administrator privileges and type
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Code>          cd vcpkg
+PS Code\vcpkg>    .\vcpkg integrate install
+```
+
+10) Open a Powershell (as a standard user) and type
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Code>          cd vcpkg
+PS Code\vcpkg>    .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
+```
+
+11) Open a text editor (even notepad.exe is OK!) and paste the following commands:
+
+```PowerShell
+pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
+cmd /c "VsDevCmd.bat&set" |
+foreach {
+  if ($_ -match "=") {
+    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+  }
+}
+popd
+Write-Host "Visual Studio 2017 Command Prompt variables set.`n" -ForegroundColor Yellow
+```
+
+12) Save the file in the folder `Documents\WindowsPowerShell` belonging to your user with the name `Microsoft.PowerShell_profile.ps1`
+
+### Upgrade software
+
+1) To update software installed with Chocolatey, open a Powershell with Administrator privileges and type
+
+```PowerShell
+PS \>             cup all -y
+```
+
+2) To update libraries installed with vcpkg, open a Powershell (as a standard user), type these commands and follow on-screen instructions
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Code>          cd vcpkg
+PS Code>          git pull
+PS Code>          .\vcpkg update
+```
+
+## Cygwin
+
+1) If not already installed, please install chocolatey using the [official guide](http://chocolatey.org)
+2) Open a Powershell with Administrator privileges and type
+
+```PowerShell
+PS \>             cinst -y cygwin
+```
+
+3) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "cpp" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in Powershell, or from the graphical interface in explorer). We will now define an environment variable to tell the system where our folder is. Please note down its full path. Open a Powershell (as a standard user) and type
+
+```PowerShell
+PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
+```
+
+4) In the upper part of the window that pops-up, create a new variable with name WORKSPACE and value the full path noted down before
+5) Open a Powershell (as a standard user) and type (remove the `_x64` suffix in the second line if your operating system is 32 bit)
+
+```PowerShell
+PS \>             cd $env:WORKSPACE
+PS Code>          Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile $env:WORKSPACE\cygwin-setup.exe
+PS Code>          .\cygwin-setup --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,libboost-devel,cmake,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
+```
