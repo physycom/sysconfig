@@ -22,14 +22,14 @@ echo -e "\n export DISPLAY=localhost:0.0 \n" >> ~/.bashrc
 
 ## Ubuntu
 
-1) Definire una cartella di lavoro, che chiameremo WORKSPACE d'ora in poi: questa sarà una cartella "Codice" nella nostra home, oppure una cartella "code" sul desktop, tutto a vostro piacimento. Createla, se non ce l'avete già, nel modo preferito (mkdir da bash, oppure direttamente dall'interfaccia grafica col mouse). Standardizzeremo il funzionamento dei nostri script indipendentemente dalla posizione di questa cartella definendo a tal proposito una variabile d'ambiente. Attenzione a sapere esattamente il path assoluto di questa cartella, che assomiglierà ad una cosa del tipo `/home/$(whoami)/codice/` 
+1) Definire una cartella di lavoro, che chiameremo WORKSPACE d'ora in poi: questa sarà una cartella "Codice" nella nostra home, oppure una cartella "code" sul desktop, tutto a vostro piacimento. Createla, se non ce l'avete già, nel modo preferito (mkdir da bash, oppure direttamente dall'interfaccia grafica col mouse). Standardizzeremo il funzionamento dei nostri script indipendentemente dalla posizione di questa cartella definendo a tal proposito una variabile d'ambiente. Attenzione a sapere esattamente il path assoluto di questa cartella, che assomiglierà ad una cosa del tipo `/home/$(whoami)/codice/`
 2) Aprire quindi un terminale bash e digitare (sostituire `/path/completo/alla/nostra/cartella` con il path che abbiamo appena stabilito)
 
 ```bash
 echo -e "\n export WORKSPACE=/path/completo/alla/nostra/cartella \n" >> ~/.bashrc
 sudo apt-get update
 sudo apt-get dist-upgrade
-sudo apt-get install -y g++ cmake make git 
+sudo apt-get install -y g++ cmake make git dos2unix
 git config --global core.autocrlf input
 sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
 ```
@@ -48,7 +48,7 @@ xcode-select --install
 ```bash
 brew update
 brew upgrade
-brew install cmake make git
+brew install cmake make git dos2unix
 git config --global core.autocrlf input
 brew install fltk boost freeglut
 ```
@@ -128,6 +128,31 @@ foreach {
 }
 popd
 Write-Host "Visual Studio 2017 Command Prompt variables set.`n" -ForegroundColor Yellow
+Set-Alias ll Get-ChildItem
+Function dos2unix {
+Param (
+        [Parameter(mandatory=$true)]
+        [string[]]$path
+      )
+
+  Get-ChildItem -File -Recurse -Path $path |
+  ForEach-Object {
+    Write-Host "Converting $_"
+    $x = get-content -raw -path $_.fullname; $x -replace "`r`n","`n" | Set-Content -NoNewline -Force -path $_.fullname
+  }
+}
+Function unix2dos {
+Param (
+        [Parameter(mandatory=$true)]
+        [string[]]$path
+      )
+
+  Get-ChildItem -File -Recurse -Path $path |
+  ForEach-Object {
+    Write-Host "Converting $_"
+    $x = get-content -raw -path $_.fullname; $x -replace "`n","`r`n" | Set-Content -NoNewline -Force -path $_.fullname
+  }
+}
 ```
 
 12) Salvare il file nella cartella `Documenti\WindowsPowerShell` del proprio utente con nome `Microsoft.PowerShell_profile.ps1`
@@ -170,5 +195,5 @@ PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 ```PowerShell
 PS \>             cd $env:WORKSPACE
 PS Codice>        Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile $env:WORKSPACE\cygwin-setup.exe
-PS Codice>        .\cygwin-setup --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,libboost-devel,cmake,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
+PS Codice>        .\cygwin-setup --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,cmake,git,dos2unix,libboost-devel,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
 ```

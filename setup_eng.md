@@ -22,14 +22,14 @@ echo -e "\n export DISPLAY=localhost:0.0 \n" >> ~/.bashrc
 
 ## Ubuntu
 
-1) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "c++" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in bash, or from the graphical interface of your distribution). We will now define an environment variable to tell the system where our folder is. Please note down the full path of this folder, which will look like `/home/$(whoami)/code/` 
+1) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "c++" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in bash, or from the graphical interface of your distribution). We will now define an environment variable to tell the system where our folder is. Please note down the full path of this folder, which will look like `/home/$(whoami)/code/`
 2) Open a Bash terminal and type the following commands (replace `/full/path/to/my/folder` with the previous path noted down)
 
 ```bash
 echo -e "\n export WORKSPACE=/full/path/to/my/folder \n" >> ~/.bashrc
 sudo apt-get update
 sudo apt-get dist-upgrade
-sudo apt-get install -y g++ cmake make git 
+sudo apt-get install -y g++ cmake make git dos2unix
 git config --global core.autocrlf input
 sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
 ```
@@ -48,12 +48,12 @@ xcode-select --install
 ```bash
 brew update
 brew upgrade
-brew install cmake make git
+brew install cmake make git dos2unix
 git config --global core.autocrlf input
 brew install fltk boost freeglut
 ```
 
-4) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "c++" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in bash, or from the graphical interface in Finder). We will now define an environment variable to tell the system where our folder is. Please note down the full path of this folder, which will look like `/home/$(whoami)/code/` 
+4) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "c++" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in bash, or from the graphical interface in Finder). We will now define an environment variable to tell the system where our folder is. Please note down the full path of this folder, which will look like `/home/$(whoami)/code/`
 2) Open a Terminal and type the following command (replace `/full/path/to/my/folder` with the previous path noted down)
 
 ```bash
@@ -128,6 +128,31 @@ foreach {
 }
 popd
 Write-Host "Visual Studio 2017 Command Prompt variables set.`n" -ForegroundColor Yellow
+Set-Alias ll Get-ChildItem
+Function dos2unix {
+Param (
+        [Parameter(mandatory=$true)]
+        [string[]]$path
+      )
+
+  Get-ChildItem -File -Recurse -Path $path |
+  ForEach-Object {
+    Write-Host "Converting $_"
+    $x = get-content -raw -path $_.fullname; $x -replace "`r`n","`n" | Set-Content -NoNewline -Force -path $_.fullname
+  }
+}
+Function unix2dos {
+Param (
+        [Parameter(mandatory=$true)]
+        [string[]]$path
+      )
+
+  Get-ChildItem -File -Recurse -Path $path |
+  ForEach-Object {
+    Write-Host "Converting $_"
+    $x = get-content -raw -path $_.fullname; $x -replace "`n","`r`n" | Set-Content -NoNewline -Force -path $_.fullname
+  }
+}
 ```
 
 12) Save the file in the folder `Documents\WindowsPowerShell` belonging to your user with the name `Microsoft.PowerShell_profile.ps1`
@@ -170,5 +195,5 @@ PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 ```PowerShell
 PS \>             cd $env:WORKSPACE
 PS Code>          Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile $env:WORKSPACE\cygwin-setup.exe
-PS Code>          .\cygwin-setup --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,libboost-devel,cmake,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
+PS Code>          .\cygwin-setup --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,cmake,git,dos2unix,libboost-devel,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
 ```
