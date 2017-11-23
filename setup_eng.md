@@ -71,19 +71,25 @@ PS \>             cinst -y git cmake powershell
 ```
 
 4) Restart the PC if required by chocolatey after the latest step
-5) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "cpp" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in Powershell, or from the graphical interface in explorer). We will now define an environment variable to tell the system where our folder is. Please note down its full path. Open a Powershell (as a standard user) and type
+5) Open your Powershell with Administrator privileges, type the following command and confirm it:
+
+```PowerShell
+PS \>             Set-ExecutionPolicy unrestricted
+```
+
+6) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "cpp" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in Powershell, or from the graphical interface in explorer). We will now define an environment variable to tell the system where our folder is. Please note down its full path. Open a Powershell (as a standard user) and type
 
 ```PowerShell
 PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 ```
 
-6) In the upper part of the window that pops-up, create a new variable with name WORKSPACE and value the full path noted down before. If it not already in the PATH (this is possible only if you did it before), we also need to modify the "Path" variable adding the following string (on Windows 10 you need to add a new line to insert it, on Windows Windows 7/8 it is necessary to append it using a `;` as a separator between other records):
+7) In the upper part of the window that pops-up, create a new variable with name WORKSPACE and value the full path noted down before. If it not already in the PATH (this is possible only if you did it before), we also need to modify the "Path" variable adding the following string (on Windows 10 you need to add a new line to insert it, on Windows Windows 7/8 it is necessary to append it using a `;` as a separator between other records):
 
 ```cmd
 %PROGRAMFILES%/CMake/bin
 ```
 
-7) Open a Powershell (as a standard user) and type
+8) Open a Powershell (as a standard user) and type
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -91,7 +97,7 @@ PS Code>          git config --global core.autocrlf input
 PS Code>          git clone https://github.com/physycom/sysconfig.git
 ```
 
-8) If `vcpkg` is not installed, please follow the next procedure, otherwise please jump to #10
+9) If `vcpkg` is not installed, please follow the next procedure, otherwise please jump to #10
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -100,7 +106,7 @@ PS Code>          cd vcpkg
 PS Code\vcpkg>    .\bootstrap-vcpkg.bat
 ```
 
-9) Open a Powershell with Administrator privileges and type
+10) Open a Powershell with Administrator privileges and type
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -108,7 +114,7 @@ PS Code>          cd vcpkg
 PS Code\vcpkg>    .\vcpkg integrate install
 ```
 
-10) Open a Powershell (as a standard user) and type
+11) Open a Powershell (as a standard user) and type
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -116,7 +122,7 @@ PS Code>          cd vcpkg
 PS Code\vcpkg>    .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
 ```
 
-11) Open a text editor (even notepad.exe is OK!) and paste the following commands:
+12) Open a text editor (even notepad.exe is OK!) and paste the following commands:
 
 ```PowerShell
 pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
@@ -155,7 +161,7 @@ Param (
 }
 ```
 
-12) Save the file in the folder `Documents\WindowsPowerShell` belonging to your user with the name `Microsoft.PowerShell_profile.ps1`
+13) Save the file in the folder `Documents\WindowsPowerShell` belonging to your user with the name `Microsoft.PowerShell_profile.ps1`
 
 ### Upgrade software
 

@@ -71,19 +71,25 @@ PS \>             cinst -y git cmake powershell
 ```
 
 4) Riavviare il PC se richiesto da chocolatey
-5) Definire una cartella di lavoro, che chiameremo WORKSPACE d'ora in poi: una cartella "Codice" nella nostra home, oppure una cartella "code" sul desktop, creandola nel modo preferito (mkdir da Powershell, oppure direttamente da explorer col mouse). Standardizzeremo il funzionamento dei nostri script indipendentemente dalla posizione di questa cartella definendo a tal proposito una variabile d'ambiente. Aprire pertanto una Powershell in modalità utente standard e digitare
+5) Avviare Powershell in modalità ammministratore e digitare il seguente comando (dare inoltre conferma al messaggio che compare)
+
+```PowerShell
+PS \>             Set-ExecutionPolicy unrestricted
+```
+
+6) Definire una cartella di lavoro, che chiameremo WORKSPACE d'ora in poi: una cartella "Codice" nella nostra home, oppure una cartella "code" sul desktop, creandola nel modo preferito (mkdir da Powershell, oppure direttamente da explorer col mouse). Standardizzeremo il funzionamento dei nostri script indipendentemente dalla posizione di questa cartella definendo a tal proposito una variabile d'ambiente. Aprire pertanto una Powershell in modalità utente standard e digitare
 
 ```PowerShell
 PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 ```
 
-6) Nella schermata che si apre, nella sezione superiore, creare una nuova variabile con nome WORKSPACE e come valore il path completo della nostra cartella di lavoro precedentemente stabilita. Se CMake non fosse già nel path perché già fatto in passato, bisogna inoltre aggiungere alla variabile "Path" il seguente percorso (su Windows 10 è sufficiente creare una nuova riga, su Windows 7/8 invece è necessario assicurarsi di separare con un `;` l'aggiunta da eventuali altri record presenti):
+7) Nella schermata che si apre, nella sezione superiore, creare una nuova variabile con nome WORKSPACE e come valore il path completo della nostra cartella di lavoro precedentemente stabilita. Se CMake non fosse già nel path perché già fatto in passato, bisogna inoltre aggiungere alla variabile "Path" il seguente percorso (su Windows 10 è sufficiente creare una nuova riga, su Windows 7/8 invece è necessario assicurarsi di separare con un `;` l'aggiunta da eventuali altri record presenti):
 
 ```cmd
 %PROGRAMFILES%/CMake/bin
 ```
 
-7) Aprire una nuova Powershell, come utente standard, e clonare questo repository seguendo le istruzioni seguenti
+8) Aprire una nuova Powershell, come utente standard, e clonare questo repository seguendo le istruzioni seguenti
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -91,7 +97,7 @@ PS Codice>        git config --global core.autocrlf input
 PS Codice>        git clone https://github.com/physycom/sysconfig.git
 ```
 
-8) Se `vcpkg` non è installato, eseguire la procedura seguente, altrimenti saltare direttamente al punto 10
+9) Se `vcpkg` non è installato, eseguire la procedura seguente, altrimenti saltare direttamente al punto 10
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -100,7 +106,7 @@ PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\bootstrap-vcpkg.bat
 ```
 
-9) Aprire Powershell in modalità amministratore e quindi digitare
+10) Aprire Powershell in modalità amministratore e quindi digitare
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -108,7 +114,7 @@ PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\vcpkg integrate install
 ```
 
-10) Aprire Powershell in modalità utente standard e quindi digitare
+11) Aprire Powershell in modalità utente standard e quindi digitare
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
@@ -116,7 +122,7 @@ PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
 ```
 
-11) Aprire un editor di testo qualsiasi (anche notepad.exe va bene!) e incollare il seguente testo:
+12) Aprire un editor di testo qualsiasi (anche notepad.exe va bene!) e incollare il seguente testo:
 
 ```PowerShell
 pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
@@ -155,7 +161,7 @@ Param (
 }
 ```
 
-12) Salvare il file nella cartella `Documenti\WindowsPowerShell` del proprio utente con nome `Microsoft.PowerShell_profile.ps1`
+13) Salvare il file nella cartella `Documenti\WindowsPowerShell` del proprio utente con nome `Microsoft.PowerShell_profile.ps1`
 
 ### Upgrade software
 
