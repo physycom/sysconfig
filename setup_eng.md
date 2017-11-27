@@ -31,7 +31,41 @@ sudo apt-get update
 sudo apt-get dist-upgrade
 sudo apt-get install -y g++ cmake make git dos2unix
 git config --global core.autocrlf input
+git clone https://github.com/physycom/sysconfig
 sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
+```
+
+3) Open a Bash terminal and type the following command
+
+```bash
+cmake --version
+```
+
+If the `cmake` installed version is lower than 3.1, it is necessary to manually update it to be able to build the code. Otherwise, your procedure is finished.
+4) Open a Bash terminal and type these commands (if you use a 32 bit linux, copy from the second block)
+
+*Linux 64 bit*
+```bash
+cd $WORKSPACE
+export CMAKE_FULL_VERSION="cmake-3.10.0-Linux-x86_64"
+export CMAKE_VERSION="v3.10"
+mkdir cmake
+cd cmake
+wget https://cmake.org/files/${CMAKE_VERSION}/${CMAKE_FULL_VERSION}.tar.gz
+tar zxvf ${CMAKE_FULL_VERSION}.tar.gz
+echo -e "\n export PATH=${WORKSPACE}/cmake/${CMAKE_FULL_VERSION}/bin:\$PATH \n" >> ~/.bashrc
+```
+
+*Linux 32 bit*
+```bash
+cd $WORKSPACE
+export CMAKE_FULL_VERSION="cmake-3.6.0-Linux-i386.tar.gz"
+export CMAKE_VERSION="v3.6"
+mkdir cmake
+cd cmake
+wget https://cmake.org/files/${CMAKE_VERSION}/${CMAKE_FULL_VERSION}.tar.gz
+tar zxvf ${CMAKE_FULL_VERSION}.tar.gz
+echo -e "\n export PATH=${WORKSPACE}/cmake/${CMAKE_FULL_VERSION}/bin:\$PATH \n" >> ~/.bashrc
 ```
 
 ## macOS
@@ -50,11 +84,12 @@ brew update
 brew upgrade
 brew install cmake make git dos2unix
 git config --global core.autocrlf input
+git clone https://github.com/physycom/sysconfig
 brew install fltk boost freeglut
 ```
 
 4) Define a work folder, which we will call WORKSPACE in this tutorial: this could be a "Code" folder in our home, a "c++" folder on our desktop, whatever you want. Create it if you don't already have, using your favourite method (mkdir in bash, or from the graphical interface in Finder). We will now define an environment variable to tell the system where our folder is. Please note down the full path of this folder, which will look like `/home/$(whoami)/code/`
-2) Open a Terminal and type the following command (replace `/full/path/to/my/folder` with the previous path noted down)
+5) Open a Terminal and type the following command (replace `/full/path/to/my/folder` with the previous path noted down)
 
 ```bash
 echo -e "\n export WORKSPACE=/full/path/to/my/folder \n" >> ~/.bash_profile
@@ -202,4 +237,5 @@ PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 PS \>             cd $env:WORKSPACE
 PS Code>          Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile $env:WORKSPACE\cygwin-setup.exe
 PS Code>          .\cygwin-setup --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --packages gcc-g++,cmake,git,dos2unix,libboost-devel,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
+PS Code>          git clone https://github.com/physycom/sysconfig.git
 ```
