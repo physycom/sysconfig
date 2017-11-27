@@ -29,7 +29,7 @@ echo -e "\n export DISPLAY=localhost:0.0 \n" >> ~/.bashrc
 echo -e "\n export WORKSPACE=/path/completo/alla/nostra/cartella \n" >> ~/.bashrc
 sudo apt-get update
 sudo apt-get dist-upgrade
-sudo apt-get install -y g++ cmake make git dos2unix
+sudo apt-get install -y g++ cmake make git dos2unix ninja-build
 git config --global core.autocrlf input
 git clone https://github.com/physycom/sysconfig
 sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
@@ -82,7 +82,7 @@ xcode-select --install
 ```bash
 brew update
 brew upgrade
-brew install cmake make git dos2unix
+brew install cmake make git dos2unix ninja
 git config --global core.autocrlf input
 git clone https://github.com/physycom/sysconfig
 brew install fltk boost freeglut
@@ -102,7 +102,7 @@ echo -e "\n export WORKSPACE=/path/completo/alla/nostra/cartella \n" >> ~/.bash_
 3) Se non avete `git` e `cmake` già installati, oppure se non siete sicuri di avere una Powershell recente, aprire Powershell in modalità amministratore e quindi digitare
 
 ```PowerShell
-PS \>             cinst -y git cmake powershell
+PS \>             cinst -y git cmake powershell ninja
 ```
 
 4) Riavviare il PC se richiesto da chocolatey
@@ -149,12 +149,13 @@ PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\vcpkg integrate install
 ```
 
-11) Aprire Powershell in modalità utente standard e quindi digitare
+11) Aprire Powershell in modalità utente standard e quindi digitare (l'ultimo comando richiede una conferma e serve per rimuovere files non necessari)
 
 ```PowerShell
 PS \>             cd $env:WORKSPACE
 PS Codice>        cd vcpkg
 PS Codice\vcpkg>  .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
+PS Codice\vcpkg>  rmdir .\buildtrees\
 ```
 
 12) Aprire un editor di testo qualsiasi (anche notepad.exe va bene!) e incollare il seguente testo:
