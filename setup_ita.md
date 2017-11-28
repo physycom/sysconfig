@@ -41,7 +41,8 @@ sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mes
 cmake --version
 ```
 
-Se la versione di `cmake` installata è precedente alla 3.1, è necessario procedere con gli step seguenti per aggiornare manualmente il software. Altrimenti la procedura è conclusa.   
+Se la versione di `cmake` installata è precedente alla 3.1, è necessario procedere con gli step seguenti per aggiornare manualmente il software. Altrimenti la procedura è conclusa.
+
 4) Aprire un terminale bash e digitare i seguenti comandi (nb: nel caso si utilizzi un linux a 32 bit utilizzare il secondo blocco)
 
 *Linux 64 bit*
