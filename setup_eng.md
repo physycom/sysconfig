@@ -41,7 +41,7 @@ sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mes
 cmake --version
 ```
 
-If the `cmake` installed version is lower than 3.1, it is necessary to manually update it to be able to build the code. Otherwise, your procedure is finished.
+If the `cmake` installed version is lower than 3.1, it is necessary to manually update it to be able to build the code. Otherwise, your procedure is finished.   
 4) Open a Bash terminal and type these commands (if you use a 32 bit linux, copy from the second block)
 
 *Linux 64 bit*
