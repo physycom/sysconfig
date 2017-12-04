@@ -192,10 +192,22 @@ Param (
 
   Get-ChildItem -File -Recurse -Path $path |
   ForEach-Object {
-    Write-Host "Converting $_"
-    $x = get-content -raw -path $_.fullname; $x -replace "`n","`r`n" | Set-Content -NoNewline -Force -path $_.fullname
+    $x = get-content -raw -path $_.fullname
+    $SearchStr = [regex]::Escape("`r`n")
+    $SEL = Select-String -InputObject $x -Pattern $SearchStr
+    if ($SEL -ne $null)
+    {
+        Write-Host "Converting $_" 
+        # do nothing: avoid creating files containing `r`r`n when using unix2dos twice on the same file
+    }
+    else
+    {
+        Write-Host "Converting $_" 
+         $x -replace "`n","`r`n" | Set-Content -NoNewline -Force -path $_.fullname
+    }
   }
 }
+
 ```
 
 13) Salvare il file nella cartella `Documenti\WindowsPowerShell` del proprio utente con nome `Microsoft.PowerShell_profile.ps1`
