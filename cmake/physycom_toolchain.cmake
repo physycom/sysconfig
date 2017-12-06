@@ -67,9 +67,9 @@ if (APPLE)
 endif()
 
 
-# make sure that the default is a RELEASE
+# make sure that the default is a Release
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE RELEASE)
+  set(CMAKE_BUILD_TYPE "Release")
 endif()
 
 
