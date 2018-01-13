@@ -153,13 +153,17 @@ PS Codice\vcpkg>  .\vcpkg integrate install
 11) Aprire Powershell in modalità utente standard e quindi digitare (l'ultimo comando richiede una conferma e serve per rimuovere files non necessari)
 
 ```PowerShell
-PS \>             cd $env:WORKSPACE
-PS Codice>        cd vcpkg
-PS Codice\vcpkg>  .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
-PS Codice\vcpkg>  rmdir .\buildtrees\
+PS \>                  cd $env:WORKSPACE
+PS Codice>             cd vcpkg
+PS Codice\vcpkg>       .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
+PS Codice\vcpkg>       rmdir .\buildtrees\
+PS Codice\vcpkg>       cd ([Environment]::GetFolderPath("mydocuments"))
+PS \>                  mkdir WindowsPowerShell -Force
+PS \>                  cd WindowsPowerShell
+PS WindowsPowerShell\> notepad Microsoft.PowerShell_profile.ps1
 ```
 
-12) Aprire un editor di testo qualsiasi (anche notepad.exe va bene!) e incollare il seguente testo:
+12) Nel caso sia comparsa una finestra che chiede conferma per creare il file, rispondere di sì. Dopo di che copiare i seguenti comandi nel documento che si è aperto (nel caso non fosse vuoto mettere questi comandi in fondo) e salvare il file:
 
 ```PowerShell
 pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
@@ -210,8 +214,6 @@ Param (
 
 ```
 
-13) Salvare il file nella cartella `Documenti\WindowsPowerShell` del proprio utente con nome `Microsoft.PowerShell_profile.ps1`
-
 ### Upgrade software
 
 1) Per aggiornare i programmi installati con Chocolatey, aprire una Powershell in modalità amministratore e quindi digitare
@@ -226,7 +228,9 @@ PS \>             cup all -y
 PS \>             cd $env:WORKSPACE
 PS Codice>        cd vcpkg
 PS Codice>        git pull
+PS Codice>        .\bootstrap-vcpkg.bat
 PS Codice>        .\vcpkg update
+PS Codice>        .\vcpkg upgrade --no-dry-run
 ```
 
 ## Cygwin

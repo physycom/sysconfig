@@ -153,13 +153,17 @@ PS Code\vcpkg>    .\vcpkg integrate install
 11) Open a Powershell (as a standard user) and type (the last command requires a confirmation and is used to clean up unnecessary files)
 
 ```PowerShell
-PS \>             cd $env:WORKSPACE
-PS Code>          cd vcpkg
-PS Code\vcpkg>    .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
-PS Code\vcpkg>    rmdir .\buildtrees\
+PS \>                  cd $env:WORKSPACE
+PS Code>               cd vcpkg
+PS Code\vcpkg>         .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
+PS Code\vcpkg>         rmdir .\buildtrees\
+PS Code\vcpkg>         cd ([Environment]::GetFolderPath("mydocuments"))
+PS \>                  mkdir WindowsPowerShell -Force
+PS \>                  cd WindowsPowerShell
+PS WindowsPowerShell\> notepad Microsoft.PowerShell_profile.ps1
 ```
 
-12) Open a text editor (even notepad.exe is OK!) and paste the following commands:
+12) In the notepad test editor, press Yes if requested to create a new file and the copy-paste the following commands (append them at the end of the document if it was not empty). Remember to save before exit!
 
 ```PowerShell
 pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
@@ -209,8 +213,6 @@ Param (
 }
 ```
 
-13) Save the file in the folder `Documents\WindowsPowerShell` belonging to your user with the name `Microsoft.PowerShell_profile.ps1`
-
 ### Upgrade software
 
 1) To update software installed with Chocolatey, open a Powershell with Administrator privileges and type
@@ -225,7 +227,9 @@ PS \>             cup all -y
 PS \>             cd $env:WORKSPACE
 PS Code>          cd vcpkg
 PS Code>          git pull
+PS Code>          .\bootstrap-vcpkg.bat
 PS Code>          .\vcpkg update
+PS Code>          .\vcpkg upgrade --no-dry-run
 ```
 
 ## Cygwin
