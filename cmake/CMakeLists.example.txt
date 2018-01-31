@@ -1,9 +1,13 @@
 cmake_minimum_required (VERSION 3.1)
 project (sample)
 
-if(VCPKG_CHAINLOAD_TOOLCHAIN_FILE)
-    include("${VCPKG_CHAINLOAD_TOOLCHAIN_FILE}")
-endif()
-
+### Set output directories on a per-configuration base
+# Single configuration
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin )
+# Multi configuration
+foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
+    string( TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG )
+    set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_SOURCE_DIR}/bin )
+endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 add_executable(test ${CMAKE_SOURCE_DIR}/src/source.cpp)
