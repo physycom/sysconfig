@@ -37,8 +37,8 @@ install:
   - cd build
 
 build_script:
-  - if [%COMPILER%]==[cygwin] %CYGSH% 'cmake .. -G "Unix Makefiles" "-DCMAKE_TOOLCHAIN_FILE=../sysconfig/cmake/supertoolchain.cmake"'
+  - if [%COMPILER%]==[cygwin] %CYGSH% 'cmake .. -G "Unix Makefiles"'
   - if [%COMPILER%]==[cygwin] %CYGSH% 'cmake --build .'
-  - if [%COMPILER%]==[vs] if [%LINKING%]==[dynamic] cmake .. -G "Visual Studio 15 2017" "-DCMAKE_TOOLCHAIN_FILE=C:\projects\sysconfig\cmake\supertoolchain.cmake" "-DCMAKE_BUILD_TYPE=Release"
-  - if [%COMPILER%]==[vs] if [%LINKING%]==[static]  cmake .. -G "Visual Studio 15 2017" "-DCMAKE_TOOLCHAIN_FILE=C:\projects\sysconfig\cmake\supertoolchain.cmake" "-DVCPKG_TARGET_TRIPLET=x86-windows-static" "-DCMAKE_BUILD_TYPE=Release"
+  - if [%COMPILER%]==[vs] if [%LINKING%]==[dynamic] cmake .. -G "Visual Studio 15 2017" "-DCMAKE_TOOLCHAIN_FILE=C:\projects\vcpkg\scripts\buildsystems\vcpkg.cmake"
+  - if [%COMPILER%]==[vs] if [%LINKING%]==[static]  cmake .. -G "Visual Studio 15 2017" "-DCMAKE_TOOLCHAIN_FILE=C:\projects\vcpkg\scripts\buildsystems\vcpkg.cmake" "-DVCPKG_TARGET_TRIPLET=x86-windows-static"
   - if [%COMPILER%]==[vs] cmake --build . --config Release

@@ -17,11 +17,11 @@ matrix:
 
 before_install:
   - git clone https://github.com/physycom/sysconfig.git
-  - export SYSCONFIG_PATH=$(pwd)/sysconfig
+  - export WORKSPACE=$(pwd)/..
 
 install:
   - mkdir build && cd build
 
 script:
-  - cmake .. "-DCMAKE_TOOLCHAIN_FILE=${SYSCONFIG_PATH}/cmake/supertoolchain.cmake"
+  - cmake ..
   - cmake --build .

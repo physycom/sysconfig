@@ -1,4 +1,7 @@
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/" ${CMAKE_MODULE_PATH})
+
 macro(configure_link_flags)
   set(MSVC_C_CXX_FLAGS
     CMAKE_C_FLAGS_DEBUG
@@ -77,4 +80,13 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+
+### Set output directories on a per-configuration base
+# Single configuration
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin )
+# Multi configuration
+foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
+    string( TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG )
+    set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_SOURCE_DIR}/bin )
+endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
