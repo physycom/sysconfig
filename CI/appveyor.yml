@@ -3,15 +3,16 @@ clone_folder: c:\projects\sample
 configuration: Release
 
 environment:
+    WORKSPACE: C:\projects
+    VCPKG_ROOT: C:\projects\vcpkg
+    VCPKG_DEFAULT_TRIPLET: x64-windows-physycom
     matrix:
-    - platform: cygwin64
+    - platform: Cygwin64
       COMPILER: cygwin
       CYGWIN_NOWINPATH: yes
       CYGSH: C:\cygwin64\bin\bash -c
     - platform: Win64
       COMPILER: vs
-      VCPKG_ROOT: C:\projects\vcpkg
-      VCPKG_DEFAULT_TRIPLET: x64-windows-physycom
 
 
 install:
@@ -21,11 +22,10 @@ install:
   - if [%COMPILER%]==[cygwin] SET "PATH=C:\cygwin64\bin;C:\cygwin64\usr\bin;%PATH%"
   - if [%COMPILER%]==[cygwin] SET PATH=%PATH:C:\Program Files\Git\usr\bin;=%
   - git submodule -q update --init --recursive
-  - SET WORKSPACE="C:\projects"
   - cd %WORKSPACE%\
   - mkdir cygwin-downloads
-  - ps: if($env:COMPILER -eq "cygwin") { Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile C:\projects\cygwin-setup.exe }
-  - if [%COMPILER%]==[cygwin] C:\projects\cygwin-setup.exe --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --root C:\cygwin64 --local-package-dir C:\projects\cygwin-downloads --packages gcc-g++,libboost-devel,cmake,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
+  - ps: if($env:COMPILER -eq "cygwin") { Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile $env:WORKSPACE\cygwin-setup.exe }
+  - if [%COMPILER%]==[cygwin] %WORKSPACE%\cygwin-setup.exe --quiet-mode --no-shortcuts --no-startmenu --no-desktop --upgrade-also --root C:\cygwin64 --local-package-dir %WORKSPACE%\cygwin-downloads --packages gcc-g++,libboost-devel,cmake,libfltk-devel,libglut-devel,libGL-devel,libGLU-devel,fluid,libjpeg-devel,libXi-devel,libXmu-devel
   - git clone https://github.com/physycom/sysconfig
   - if [%COMPILER%]==[vs] git clone https://github.com/Microsoft/vcpkg
   - if [%COMPILER%]==[vs] copy %WORKSPACE%\sysconfig\cmake\%VCPKG_DEFAULT_TRIPLET%.cmake %WORKSPACE%\vcpkg\triplets\

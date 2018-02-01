@@ -13,6 +13,10 @@
           "value": "${env.VCPKG_ROOT}\\scripts\\buildsystems\\vcpkg.cmake"
         },
         {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-windows-physycom"
+        },
+        {
           "name": "CMAKE_BUILD_TYPE",
           "value": "Release"
         }
@@ -28,6 +32,10 @@
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
           "value": "${env.VCPKG_ROOT}\\scripts\\buildsystems\\vcpkg.cmake"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-windows-physycom"
         },
         {
           "name": "CMAKE_BUILD_TYPE",
@@ -47,6 +55,10 @@
           "value": "${env.VCPKG_ROOT}\\scripts\\buildsystems\\vcpkg.cmake"
         },
         {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-windows-physycom"
+        },
+        {
           "name": "CMAKE_BUILD_TYPE",
           "value": "Debug"
         }
@@ -62,6 +74,10 @@
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
           "value": "${env.VCPKG_ROOT}\\scripts\\buildsystems\\vcpkg.cmake"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "x64-windows-physycom"
         },
         {
           "name": "CMAKE_BUILD_TYPE",
