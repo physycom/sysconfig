@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 
-Remove-Item build -Force -Recurse -ErrorAction SilentlyContinue
+#Remove-Item build -Force -Recurse -ErrorAction SilentlyContinue
 New-Item -Path .\build -ItemType directory -Force
 Set-Location build
 
