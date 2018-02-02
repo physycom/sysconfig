@@ -119,7 +119,8 @@ PS \>             Set-ExecutionPolicy unrestricted
 PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 ```
 
-7) In the upper part of the window that pops-up, create a new variable with name WORKSPACE and value the full path noted down before. If it not already in the PATH (this is possible only if you did it before), we also need to modify the "Path" variable adding the following string (on Windows 10 you need to add a new line to insert it, on Windows Windows 7/8 it is necessary to append it using a `;` as a separator between other records):
+7) In the upper part of the window that pops-up, we have to create three new environment variables: one with name `WORKSPACE` and value the full path noted down before, one with name `VCPKG_ROOT` and value `%WORKSPACE%\vcpkg` and finally one with name `VCPKG_DEFAULT_TRIPLET` and value `x64-windows-physycom`.
+If it not already in the `PATH` (this is possible only if you did it before), we also need to modify the "Path" variable adding the following string (on Windows 10 you need to add a new line to insert it, on Windows Windows 7/8 it is necessary to append it using a `;` as a separator between other records):
 
 ```cmd
 %PROGRAMFILES%/CMake/bin
@@ -139,6 +140,7 @@ PS Code>          git clone https://github.com/physycom/sysconfig.git
 PS \>             cd $env:WORKSPACE
 PS Code>          git clone https://github.com/Microsoft/vcpkg.git
 PS Code>          cd vcpkg
+PS Code>          cp ..\sysconfig\cmake\x64-windows-physycom.cmake .\triplets\
 PS Code\vcpkg>    .\bootstrap-vcpkg.bat
 ```
 
@@ -201,12 +203,12 @@ Param (
     $SEL = Select-String -InputObject $x -Pattern $SearchStr
     if ($SEL -ne $null)
     {
-        Write-Host "Converting $_" 
+        Write-Host "Converting $_"
         # do nothing: avoid creating files containing `r`r`n when using unix2dos twice on the same file
     }
     else
     {
-        Write-Host "Converting $_" 
+        Write-Host "Converting $_"
          $x -replace "`n","`r`n" | Set-Content -NoNewline -Force -path $_.fullname
     }
   }

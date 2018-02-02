@@ -119,7 +119,8 @@ PS \>             Set-ExecutionPolicy unrestricted
 PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 ```
 
-7) Nella schermata che si apre, nella sezione superiore, creare una nuova variabile con nome WORKSPACE e come valore il path completo della nostra cartella di lavoro precedentemente stabilita. Se CMake non fosse già nel path perché già fatto in passato, bisogna inoltre aggiungere alla variabile "Path" il seguente percorso (su Windows 10 è sufficiente creare una nuova riga, su Windows 7/8 invece è necessario assicurarsi di separare con un `;` l'aggiunta da eventuali altri record presenti):
+7) Nella schermata che si apre, nella sezione superiore, dobbiamo creare tre nuove variabili: una con nome `WORKSPACE` e come valore il path completo della nostra cartella di lavoro precedentemente stabilita, una con nome `VCPKG_ROOT` e valore `%WORKSPACE%\vcpkg` ed infine l'ultima con nome `VCPKG_DEFAULT_TRIPLET` e valore `x64-windows-physycom`.
+Se CMake non fosse già nel `PATH` perché già fatto in passato, bisogna inoltre aggiungere alla variabile "Path" (diversa dalle precedenti, questa dovrebbe esistere già) il seguente percorso (su Windows 10 è sufficiente creare una nuova riga, su Windows 7/8 invece è necessario assicurarsi di separare con un `;` l'aggiunta da eventuali altri record presenti):
 
 ```cmd
 %PROGRAMFILES%/CMake/bin
@@ -139,6 +140,7 @@ PS Codice>        git clone https://github.com/physycom/sysconfig.git
 PS \>             cd $env:WORKSPACE
 PS Codice>        git clone https://github.com/Microsoft/vcpkg.git
 PS Codice>        cd vcpkg
+PS Codice>        cp ..\sysconfig\cmake\x64-windows-physycom.cmake .\triplets\
 PS Codice\vcpkg>  .\bootstrap-vcpkg.bat
 ```
 
@@ -155,7 +157,7 @@ PS Codice\vcpkg>  .\vcpkg integrate install
 ```PowerShell
 PS \>                  cd $env:WORKSPACE
 PS Codice>             cd vcpkg
-PS Codice\vcpkg>       .\vcpkg install fltk fltk:x86-windows-static boost boost:x86-windows-static freeglut freeglut:x86-windows-static opengl opengl:x86-windows-static
+PS Codice\vcpkg>       .\vcpkg install fltk boost freeglut opengl
 PS Codice\vcpkg>       rmdir .\buildtrees\
 PS Codice\vcpkg>       cd ([Environment]::GetFolderPath("mydocuments"))
 PS \>                  mkdir WindowsPowerShell -Force
@@ -201,12 +203,12 @@ Param (
     $SEL = Select-String -InputObject $x -Pattern $SearchStr
     if ($SEL -ne $null)
     {
-        Write-Host "Converting $_" 
+        Write-Host "Converting $_"
         # do nothing: avoid creating files containing `r`r`n when using unix2dos twice on the same file
     }
     else
     {
-        Write-Host "Converting $_" 
+        Write-Host "Converting $_"
          $x -replace "`n","`r`n" | Set-Content -NoNewline -Force -path $_.fullname
     }
   }
