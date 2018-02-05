@@ -123,7 +123,7 @@ PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 Se CMake non fosse già nel `PATH` perché già fatto in passato, bisogna inoltre aggiungere alla variabile "Path" (diversa dalle precedenti, questa dovrebbe esistere già) il seguente percorso (su Windows 10 è sufficiente creare una nuova riga, su Windows 7/8 invece è necessario assicurarsi di separare con un `;` l'aggiunta da eventuali altri record presenti):
 
 ```cmd
-%PROGRAMFILES%/CMake/bin
+%PROGRAMFILES%\CMake\bin
 ```
 
 8) Aprire una nuova Powershell, come utente standard, e clonare questo repository seguendo le istruzioni seguenti

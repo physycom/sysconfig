@@ -123,7 +123,7 @@ PS \>             rundll32 sysdm.cpl,EditEnvironmentVariables
 If it not already in the `PATH` (this is possible only if you did it before), we also need to modify the "Path" variable adding the following string (on Windows 10 you need to add a new line to insert it, on Windows Windows 7/8 it is necessary to append it using a `;` as a separator between other records):
 
 ```cmd
-%PROGRAMFILES%/CMake/bin
+%PROGRAMFILES%\CMake\bin
 ```
 
 8) Open a Powershell (as a standard user) and type
