@@ -169,7 +169,7 @@ PS WindowsPowerShell\> notepad Microsoft.PowerShell_profile.ps1
 
 ```PowerShell
 pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
-cmd /c "VsDevCmd.bat&set" |
+cmd /c "VsDevCmd.bat -arch=x64 & set" |
 foreach {
   if ($_ -match "=") {
     $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
