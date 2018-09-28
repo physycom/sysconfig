@@ -1,12 +1,13 @@
-﻿
+
 pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools"
-cmd /c "VsDevCmd.bat&set" |
+cmd /c "VsDevCmd.bat -arch=x64 & set" |
 foreach {
   if ($_ -match "=") {
     $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
   }
 }
 popd
+
 Write-Host "Visual Studio 2017 Command Prompt variables set.`n" -ForegroundColor Yellow
 
 Set-Alias ll Get-ChildItem
@@ -19,7 +20,7 @@ Param (
 
   Get-ChildItem -File -Recurse -Path $path |
   ForEach-Object {
-    Write-Host "Converting $_" 
+    Write-Host "Converting $_"
     $x = get-content -raw -path $_.fullname; $x -replace "`r`n","`n" | Set-Content -NoNewline -Force -path $_.fullname
   }
 }
@@ -37,12 +38,12 @@ Param (
     $SEL = Select-String -InputObject $x -Pattern $SearchStr
     if ($SEL -ne $null)
     {
-        Write-Host "Converting $_" 
+        Write-Host "Converting $_"
         # do nothing: avoid creating files containing `r`r`n when using unix2dos twice on the same file
     }
     else
     {
-        Write-Host "Converting $_" 
+        Write-Host "Converting $_"
          $x -replace "`n","`r`n" | Set-Content -NoNewline -Force -path $_.fullname
     }
   }
@@ -59,7 +60,7 @@ function gg++()
     $cmd = "cl.exe "
     Foreach ($i in $args)
     {
-        if ( $i.Contains(".cpp") ) 
+        if ( $i.Contains(".cpp") )
         {
             $file = $i
         }
@@ -70,11 +71,11 @@ function gg++()
     $cmd = $cmd -creplace "-o ", "/Fe" # pay attention to space!
 
     # optimizations
-    $cmd = $cmd -creplace "-O0", "/Od" 
-    $cmd = $cmd -creplace "-Os", "/O1 /Os" 
-    $cmd = $cmd -creplace "-O1", "/O2 /Ot" 
-    $cmd = $cmd -creplace "-O2", "/O2 /Ot" 
-    $cmd = $cmd -creplace "-O3", "/Ox" 
+    $cmd = $cmd -creplace "-O0", "/Od"
+    $cmd = $cmd -creplace "-Os", "/O1 /Os"
+    $cmd = $cmd -creplace "-O1", "/O2 /Ot"
+    $cmd = $cmd -creplace "-O2", "/O2 /Ot"
+    $cmd = $cmd -creplace "-O3", "/Ox"
 
     # warnings
     $cmd = $cmd -creplace "-Wall", "/W3"
@@ -95,7 +96,7 @@ function gg++()
 
     # OpenMP
     $cmd = $cmd.Replace("-fopenmp", "/openmp")
-    
+
     # I DONT KNOW
     $cmd = $cmd.Replace("-shared", "/LD")
     $cmd = $cmd.Replace("-g", "/Zi")
