@@ -14,13 +14,16 @@ function getProgramFiles32bit() {
 function getLatestVisualStudioWithDesktopWorkloadPath() {
   $programFiles = getProgramFiles32bit
   $vswhereExe = "$programFiles\Microsoft Visual Studio\Installer\vswhere.exe"
+  if (-Not (Test-Path $vswhereExe)) {
+    $vswhereExe = "C:\ProgramData\chocolatey\bin\vswhere.exe"
+  }
   if (Test-Path $vswhereExe) {
     $output = & $vswhereExe -products * -latest -requires Microsoft.VisualStudio.Workload.NativeDesktop -format xml
     [xml]$asXml = $output
     foreach ($instance in $asXml.instances.instance) {
       $installationPath = $instance.InstallationPath -replace "\\$" # Remove potential trailing backslash
     }
-    if (!$installationPath) {
+    if (-Not ($installationPath)) {
       Write-Host "Warning: no full Visual Studio setup has been found, extending search to include also partial installations" -ForegroundColor Yellow
       $output = & $vswhereExe -products * -latest -format xml
       [xml]$asXml = $output
@@ -28,8 +31,8 @@ function getLatestVisualStudioWithDesktopWorkloadPath() {
         $installationPath = $instance.InstallationPath -replace "\\$" # Remove potential trailing backslash
       }
     }
-    if (!$installationPath) {
-      Write-Host "Could not locate any installation of Visual Studio" -ForegroundColor Yellow
+    if (-Not ($installationPath)) {
+      Write-Host "Critical: could not locate any installation of Visual Studio" -ForegroundColor Red
     }
   }
   else {
@@ -40,16 +43,18 @@ function getLatestVisualStudioWithDesktopWorkloadPath() {
 
 if ($null -eq (Get-Command "cl.exe" -ErrorAction SilentlyContinue)) {
   $vsfound = getLatestVisualStudioWithDesktopWorkloadPath
-  Write-Host "Found VS in ${vsfound}"
-  Push-Location "${vsfound}\Common7\Tools"
-  cmd.exe /c "VsDevCmd.bat -arch=x64 & set" |
-  ForEach-Object {
-    if ($_ -match "=") {
-      $v = $_.split("="); Set-Item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+  if ($vsfound) {
+    Write-Host "Found VS in ${vsfound}"
+    Push-Location "${vsfound}\Common7\Tools"
+    cmd.exe /c "VsDevCmd.bat -arch=x64 & set" |
+    ForEach-Object {
+      if ($_ -match "=") {
+        $v = $_.split("="); Set-Item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+      }
     }
+    Pop-Location
+    Write-Host "Visual Studio Command Prompt variables set" -ForegroundColor Yellow
   }
-  Pop-Location
-  Write-Host "Visual Studio Command Prompt variables set" -ForegroundColor Yellow
 }
 
 Set-Alias ll Get-ChildItem
