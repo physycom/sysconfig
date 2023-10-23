@@ -32,7 +32,7 @@ sudo apt-get dist-upgrade
 sudo apt-get install -y g++ cmake make git dos2unix ninja-build
 git config --global core.autocrlf input
 git clone https://github.com/physycom/sysconfig
-sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev
+sudo apt-get install -y libboost-all-dev libfltk1.3-dev freeglut3-dev libgl1-mesa-dev libglu1-mesa-dev libxinerama-dev libjpeg-dev libxi-dev libxmu-dev libcurl4-openssl-dev
 ```
 
 3) Open a Bash terminal and type the following command
